@@ -1,10 +1,15 @@
 import streamlit as st
 import pickle as pkl
 
+from pathlib import Path
+
 # Load the trained model
-modelfile = open("C:\\Users\\LENOVO\\OneDrive\\Desktop\\Machine Learning\\Pickle\\model.pkl", "rb")
-model = pkl.load(modelfile)
-modelfile.close()
+MODEL_PATH = Path(__file__).resolve().parent / "model.pkl"
+if not MODEL_PATH.exists():
+    MODEL_PATH = Path(__file__).resolve().parents[1] / "Pickle" / "model.pkl"
+
+with open(MODEL_PATH, "rb") as modelfile:
+    model = pkl.load(modelfile)
 
 # Define the prediction function
 def predict_diabetes(glucose, bloodpressure):
